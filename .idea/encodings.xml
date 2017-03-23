@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" defaultCharsetForPropertiesFiles="GBK">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/.idea" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/WZCOther/BIg数据/CreatMusic.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/cn/itcast/user/DB/DBHelp.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/cn/itcast/user/dao/UserDao.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/cn/itcast/user/dao/UserDaoImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/cn/itcast/user/service/UserService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/cn/itcast/user/text/dao/UserDaoText.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/cn/itcast/user/web/servlet/LoginServlet.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/cn/itcast/user/web/servlet/RegistServlet.java" charset="GBK" />
-    <file url="PROJECT" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/cn/itcast/user/web/servlet/RegistServlet.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/WEB-INF/lib/commons-io-1.4.jar" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

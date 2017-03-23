@@ -24,34 +24,34 @@ public class RegistServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding("UTF-8");
-        //¸ß¶Èä¯ÀÀÆ÷ÓÃUTF-8½âÂë
+        //??????????UTF-8????
         UserService userService = new UserService();
 
-        //·â×°±íµ¥
+        //?????
         User form = CommonUtils.toBean(request.getParameterMap(), User.class);
 
 
 
-        //°Ñ´íÎó·â×°ÔÚmap ÖĞ
+        //?????????map ??
         Map<String,String> errors = new HashMap<String, String>();
 
         String userName = form.getUserName();
 
         if (userName == null || userName.trim().isEmpty()){
 
-            errors.put("userName","ÓÃ»§Ãû²»ÄÜÎª¿Õ");
+            errors.put("userName","ç”¨æˆ·åä¸èƒ½ä¸ºç©º");
 
         } else if (userName.length()<3||userName.length()>15){
-            errors.put("userName","ÓÃ»§Ãû³¤¶È±ØĞëÕ¦3-15");
+            errors.put("userName","ç”¨æˆ·åä¸å«©å°‘äº3-15");
         }
         String passWord = form.getPassWord();
 
         if (passWord == null || passWord.trim().isEmpty()){
 
-            errors.put("passWord","ÃÜÂë²»ÄÜÎª¿Õ");
+            errors.put("passWord","å¯†ç ä¸èƒ½ä¸ºç©º");
 
         } else if (passWord.length()<3||passWord.length()>15){
-            errors.put("passWord","ÃÜÂë³¤¶È±ØĞëÕ¦3-15");
+            errors.put("passWord","å¯†ç å¿…é¡»3-15");
 
         }
 
@@ -59,47 +59,39 @@ public class RegistServlet extends HttpServlet {
         String verifyCode = (String) request.getSession().getAttribute("vercode_session");
         if (_verifyCode == null || passWord.trim().isEmpty()){
 
-            errors.put("verifyCode","ÑéÖ¤Âë²»ÄÜÎª¿Õ");
+            errors.put("verifyCode","éªŒè¯ç ä¸èƒ½ä¸ºç©º");
 
         } else if (_verifyCode.length()!=4){
-            errors.put("verifyCode","ÑéÖ¤Âë±ØĞëÎª4");
+            errors.put("verifyCode","éªŒè¯ç å¿…é¡»æ˜¯4ä½");
         }else if (!verifyCode.equalsIgnoreCase(_verifyCode )){
-            errors.put("verifyCode","ÑéÖ¤Âë´íÎó");
+            errors.put("verifyCode","éªŒè¯ç é”™è¯¯");
         }
 
-        //ÅĞ¶ÏmapÊÇ·ñÎªÁË¿Õ
+        //????map???????
         if (errors!= null&&errors.size()>0){
 
             request.setAttribute("errors",errors);
-            //±£´æ´íÎóµÄĞÅÏ¢  ±£´æÔÚrequestÓòÖĞ
+            //???????????  ??????request????
             request.setAttribute("user",form);
 
-            //×±·¢µ½regis.jsp
+            //?????regis.jsp
             request.getRequestDispatcher("/User/regist.jsp").forward(request,response);
             return;
         }
 
-//        String verifyCode = (String) request.getSession().getAttribute("vercode_session");
-//        System.out.println(verifyCode);
-//        if (!verifyCode.equalsIgnoreCase(form.getVerifyCode())){
-//            request.setAttribute("msg","ÑéÖ¤Âë´íÎó");
-//            request.setAttribute("user",form);
-//            request.getRequestDispatcher("/User/regist.jsp").forward(request,response);
-//
-//
-//        }
 
         try {
+
             userService.register(form);
-            response.getWriter().print("<h1>×¢²á³É¹¦£¡</h1><a href='" +
+            response.getWriter().print("æ³¨å†ŒæˆåŠŸ/h1><a href='" +
                     request.getContextPath() +
-                    "/User/login.jsp" + "'>µã»÷ÕâÀïÈ¥µÇÂ¼</a>");
+                    "/User/login.jsp" + "'>ç‚¹å‡»è¿™é‡Œå»ç™»å½•</a>");
         } catch (UserException e){
          request.setAttribute("msg",e.getMessage());
-         //±£´æ´íÎóµÄĞÅÏ¢  ±£´æÔÚrequestÓòÖĞ
+         //???????????  ??????request????
             request.setAttribute("user",form);
 
-         //×±·¢µ½regis.jsp
+         //?????regis.jsp
          request.getRequestDispatcher("/User/regist.jsp").forward(request,response);
         }
 

@@ -4,9 +4,7 @@ import cn.itcast.jdbc.JdbcUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 /**
@@ -14,43 +12,52 @@ import java.util.Properties;
  */
 public class DBHelp {
 
-    private static Properties properties = null;
 
-    //只执行一次
+    private static Connection con = null;
+    Statement stmt = null;
+
     static {
-        InputStream inputStream = JdbcUtils.class.getClassLoader().getResourceAsStream("DbConfig.properties");
-        properties = new Properties();
+        JDBC jdbc = new JDBC();
         try {
-            properties.load(inputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        //加载驱动类
-        try {
-            Class.forName(properties.getProperty("driverClassName"));
-        } catch (ClassNotFoundException e) {
+            con = jdbc.getConnection();
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-
-    public Connection getConnet() throws ClassNotFoundException, SQLException, IOException {
-
-        //连接数据库
-        Connection conn = DriverManager.getConnection(properties.getProperty("dbUrl"),
-                properties.getProperty("dbUser"),
-                properties.getProperty("dbPassword"));
-        if (!conn.isClosed()){
-            System.out.println("qingodng chengogn");
-        }
-
-
-        return  conn;
-    }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
-        new DBHelp().getConnet();
+       DBHelp dbHelp = new DBHelp();
+       dbHelp.change("");
+//        dbHelp.search("");
     }
 
+    //澧炲垹鏀规煡
+    public void change(String sql) throws SQLException {
+
+        if (sql.length() ==0) sql = "INSERT INTO `user` (`id`,`name`) VALUES ('51','鎴戦タ鍟婂晩鍟婂晩鍟奾hahah')";
+        Statement statement = con.createStatement();
+          //String sql = "INSERT INTO `user` (`id`,`name`) VALUES ('51','鎴戦タ鍟婂晩鍟婂晩鍟奾hahah')";
+        String sqljahah = "鎴戦タ";
+        int r= statement.executeUpdate(sql);
+        System.out.println(r);
+        con.close();
+    }
+
+
+    public void search(String sql) throws SQLException{
+
+        if (sql.length()==0) sql = "SELECT *FROM USER WHERE id =?";
+
+        PreparedStatement preparedStatement = con.prepareStatement(sql);
+        preparedStatement.setString(1,"16");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            int empo = resultSet.getInt(1);
+            String name = resultSet.getString("name");
+            System.out.println(empo+","+name);
+        }
+
+        con.close();
+    }
 }

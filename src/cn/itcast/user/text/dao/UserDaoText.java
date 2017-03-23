@@ -1,7 +1,10 @@
 package cn.itcast.user.text.dao;
 
+import cn.itcast.user.dao.DaoFactory;
 import cn.itcast.user.dao.UserDao;
 import cn.itcast.user.domain.User;
+
+import java.sql.SQLException;
 
 /**
  * Created by winsion on 2017/3/19.
@@ -10,7 +13,7 @@ public class UserDaoText {
 
     public  void textFindByUsername(){
 
-        UserDao userDao = new UserDao();
+        UserDao userDao = DaoFactory.getUserDao();
         User user = userDao.findByusername("王子臣");
 
         System.out.println(user);
@@ -19,12 +22,16 @@ public class UserDaoText {
 
     public void TestAdd(){
 
-        UserDao userDao = new UserDao();
+        UserDao userDao = DaoFactory.getUserDao();
 
         User user = new User();
         user.setUserName("王子臣");
         user.setPassWord("WZCX");
-        userDao.add(user);
+        try {
+            userDao.add(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

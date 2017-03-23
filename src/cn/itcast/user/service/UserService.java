@@ -1,8 +1,10 @@
 package cn.itcast.user.service;
 
+import cn.itcast.user.dao.DaoFactory;
 import cn.itcast.user.dao.UserDao;
 import cn.itcast.user.domain.User;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,39 +13,37 @@ import java.util.Map;
  */
 
 /**
- * userÒµÎñÂß¼­²ã
+ *userä¸šåŠ¡é€»è¾‘å±‚
  */
 public class UserService {
 
-    private UserDao userDao = new UserDao();
+    private UserDao userDao = DaoFactory.getUserDao();
 
-    //×¢²á¹¦ÄÜ
+    //æ³¨å†ŒåŠŸèƒ½
     public void register(User user) throws UserException{
 
-        Map<String,String> errors = new HashMap<String, String>();
 
-        //Îª¿ÕUser
-        if (user.getUserName() == "") throw new UserException("ÓÃ»§ÃûÎª¿Õ");
-        if (user.getPassWord() == "") throw new UserException("ÃÜÂëÂğÎª¿Õ");
 
         User _user = userDao.findByusername(user.getUserName());
 
-        //ÅĞ¶ÏÊÇ·ñÎª¿Õ
-        if (_user!=null) throw new UserException("ÓÃ»§Ãû" +user.getUserName()+"ÒÑ±»×¢²á");
+        //åˆ¤æ–­æ˜¯å¦ä¸ºç©º
+        if (_user!=null) throw new UserException("æ­¤ç”¨æˆ·" +user.getUserName()+"æ²¡æœ‰æ³¨å†Œ");
 
-
-
-        userDao.add(user);
+        try {
+            userDao.add(user);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    //µÇÂ¼¹¦ÄÜ
+    //ç™»å½•åŠŸèƒ½
     public User login(User user) throws UserException{
       User _user = userDao.findByusername(user.getUserName());
-        //Îª¿ÕUser
-        if (user.getUserName() == "") throw new UserException("ÓÃ»§ÃûÎª¿Õ");
-        if (user.getPassWord() == "") throw new UserException("ÃÜÂëÂğÎª¿Õ");
-        if (_user ==null) throw new UserException("´ËÓÃ»§Ã»ÓĞ×¢²á");
-        if (!_user.getPassWord().equals(user.getPassWord())) throw new UserException("ÃÜÂë´íÎó");
+        //ç”¨æˆ·åä¸ºç©º
+        if (user.getUserName() == "") throw new UserException("ç”¨æˆ·åä¸ºç©º");
+        if (user.getPassWord() == "") throw new UserException("å¯†ç å—ä¸ºç©º");
+        if (_user ==null) throw new UserException("æ­¤ç”¨æˆ·æ²¡æœ‰æ³¨å†Œ");
+        if (!_user.getPassWord().equals(user.getPassWord())) throw new UserException("å¯†ç é”™è¯¯");
 
         return _user;
     }
