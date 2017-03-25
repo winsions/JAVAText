@@ -18,6 +18,14 @@
         <servlet-class>cn.itcast.user.web.servlet.VerifyCodeServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>BasesServlet</servlet-name>
+        <servlet-class>SeveletFunction.servlet.BasesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BasesServlet</servlet-name>
+        <url-pattern>/BasesServlet</url-pattern>
+    </servlet-mapping>
 
 
     <servlet-mapping>
